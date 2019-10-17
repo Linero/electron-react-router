@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import App from "./react/Views/App";
 import Image from "./react/Views/Image";
 import Settings from "./react/Views/Settings";
+
 class ViewManager extends Component {
   static Views() {
     return {

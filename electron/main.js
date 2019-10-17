@@ -1,34 +1,35 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const { channels } = require("../src/shared/constants");
 const path = require("path");
-const url = require("url");
-const isDev = true;
+//const url = require("url");
+const isDev = require("electron-is-dev");
 let mainWindow;
 let imageWindow;
 function createWindow() {
-  const startUrl =
-    process.env.ELECTRON_START_URL ||
-    url.format({
-      pathname: path.join(__dirname, "../index.html?app"),
-      protocol: "file:",
-      slashes: true
-    });
+  // DEPRECATED
+  // const startUrl =
+  //   process.env.ELECTRON_START_URL ||
+  //   url.format({
+  //     pathname: path.join(__dirname, "../index.html"),
+  //     protocol: "file:",
+  //     slashes: true
+  //   });
 
-  const imageWindowUrl =
-    process.env.ELECTRON_START_URL ||
-    url.format({
-      pathname: path.join(__dirname, "../index.html?image"),
-      protocol: "file:",
-      slashes: true
-    });
+  // const imageWindowUrl =
+  //   process.env.ELECTRON_START_URL ||
+  //   url.format({
+  //     pathname: path.join(__dirname, "../index.html"),
+  //     protocol: "file:",
+  //     slashes: true
+  //   });
 
-  const startUrlTest = isDev
+  const startUrl = isDev
     ? "http://localhost:3000?app"
-    : `file://${path.join(__dirname, "../build/index.html?app")}`;
+    : `file://${path.join(__dirname, "../index.html?app")}`;
 
-  const imageWindowUrlTest = isDev
+  const imageWindowUrl = isDev
     ? "http://localhost:3000?image"
-    : `file://${path.join(__dirname, "../build/index.html?image")}`;
+    : `file://${path.join(__dirname, "../index.html?image")}`;
 
   mainWindow = new BrowserWindow({
     width: 800,
@@ -48,8 +49,8 @@ function createWindow() {
     show: false
   });
 
-  mainWindow.loadURL(startUrlTest);
-  imageWindow.loadURL(imageWindowUrlTest);
+  mainWindow.loadURL(startUrl);
+  imageWindow.loadURL(imageWindowUrl);
   mainWindow.on("closed", function() {
     mainWindow = null;
   });
